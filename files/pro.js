@@ -1,9 +1,7 @@
-// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
-import { getFirestore, query, where, orderBy, getDocs, collection, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, serverTimestamp, collection } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signInWithPopup, signOut, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
 
-// Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBNTDHR67L48F1nPReRs2dSoQ-PxgNKWYM",
   authDomain: "login2-d485e.firebaseapp.com",
@@ -18,141 +16,144 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Ensure DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM fully loaded and parsed');
-  
-  const emailSpan = document.getElementById('email');
-  const userNameSpan = document.getElementById('userName');
-  const changePasswordBtn = document.getElementById('changePasswordBtn');
-  const signOutBtn = document.getElementById('signOutBtn');
-  const ordersContainer = document.getElementById('orders');
+window.openPopup = function(event, payLink, baridiMobLink, usdtLink) {
+  event.preventDefault();
+  const product = event.target.closest('.card').dataset.product;
+  const price = event.target.closest('.card').dataset.price;
+  window.currentProduct = product;
+  window.currentPrice = price;
+  window.currentPayLink = payLink;
+  window.currentBaridiMobLink = baridiMobLink;
+  window.currentUsdtLink = usdtLink;
 
-  // Display user info
-  onAuthStateChanged(auth, async (user) => {
-    console.log('Auth state changed:', user);
-    if (user) {
-      emailSpan.textContent = user.email || 'No email';
-      userNameSpan.textContent = user.displayName || 'No username';
-      await fetchOrders(user.uid);
+  const popup = document.getElementById('payment-popup');
+  if (popup) {
+    const priceDisplay = document.getElementById('price-display');
+    if (priceDisplay) {
+      priceDisplay.textContent = `Price: ${price}`;
+    }
+    popup.style.display = 'flex';
+    console.log("Popup opened with details:", { product, price, payLink, baridiMobLink, usdtLink });
+  } else {
+    console.error("Payment popup element not found.");
+  }
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      alert("Please sign in to make a purchase.");
+      console.log("User not signed in");
     } else {
-      emailSpan.textContent = 'Not logged in';
-      userNameSpan.textContent = 'Not logged in';
-      ordersContainer.innerHTML = '<h1>Please sign in to view your orders.</h1>';
+      console.log("User is signed in:", user.uid);
     }
   });
+}
 
-  // Handle Sign Out
-  signOutBtn.addEventListener('click', () => {
-    console.log('Sign Out button clicked');
-    signOut(auth).then(() => {
-      console.log('Sign out successful');
-      alert('Successfully signed out');
-      window.location.href = 'sign.html'; // Redirect to sign-in page or home page
-    }).catch((error) => {
-      console.error('Sign Out Error', error);
-      alert('Error signing out');
-    });
-  });
+window.closePopup = function() {
+  const popup = document.getElementById('payment-popup');
+  if (popup) {
+    popup.style.display = 'none';
+    console.log("Popup closed");
+  } else {
+    console.error("Payment popup element not found.");
+  }
+}
 
-  // Handle Change Password
-  changePasswordBtn.addEventListener('click', () => {
-    console.log('Change Password button clicked');
-    const user = auth.currentUser;
-    console.log('Current user:', user);
+window.handlePayment = async function(method) {
+  const product = window.currentProduct;
+  const price = window.currentPrice;
 
-    if (user) {
-      const newPassword = prompt('Enter new password:');
-      console.log('New password entered:', newPassword);
+  if (!product || !price) {
+    alert("Product or price information is missing.");
+    console.log("Product or price missing.");
+    return;
+  }
 
-      if (newPassword) {
-        user.updatePassword(newPassword).then(() => {
-          console.log('Password changed successfully');
-          alert('Password changed successfully');
-        }).catch((error) => {
-          console.error('Error changing password', error);
-          alert('Error changing password');
-        });
-      } else {
-        console.log('No new password entered');
-      }
-    } else {
-      alert('No user is logged in');
-    }
-  });
-});
-
-// Fetch orders from Firestore
-async function fetchOrders(userId) {
-  console.log("Fetching orders for user ID:", userId);
   try {
-    const ordersCollection = collection(db, 'orders');
-    const q = query(ordersCollection, where('userId', '==', userId), orderBy('date', 'desc'));
-    const querySnapshot = await getDocs(q);
-
-    if (querySnapshot.empty) {
-      console.log("No orders found.");
-      document.getElementById('orders').innerHTML = '<p>No orders found.</p>';
+    const user = auth.currentUser;
+    if (!user) {
+      alert("Please sign in to make a purchase.");
+      console.log("No user signed in");
       return;
     }
 
-    const ordersContainer = document.getElementById('orders');
-    ordersContainer.innerHTML = '';
+    const userId = user.uid;
+    const ordersCollection = collection(db, 'orders');
+    const orderRef = doc(ordersCollection); // Create a new document reference
 
-    querySnapshot.forEach((doc) => {
-      const orderData = doc.data();
-      console.log("Order data:", orderData);
-      const orderElement = document.createElement('div');
-      orderElement.classList.add('order');
-
-      const statusClass = orderData.status ? 'status-success' : 'status-verifying';
-      const statusText = orderData.status ? 'Payment successful: Item will be delivered in a moment' : 'Verifying the payment';
-
-      orderElement.innerHTML = `
-        <div class="order-header">Order ID: ${orderData.orderId}</div>
-        <div class="order-details">
-          <p><strong>Product:</strong> ${orderData.product}</p>
-          <p><strong>Price:</strong> ${orderData.price}</p>
-          <p><strong>Status:</strong> <span class="order-status ${statusClass}">${statusText}</span></p>
-          <p><strong>Date:</strong> ${orderData.date.toDate().toLocaleString()}</p>
-          <p class="item1">${orderData.Your_Item || 'Your Item Will Be Delivered Here'}</p>
-          <button class="delete-button" data-id="${doc.id}">Delete Order</button>
-        </div>
-      `;
-
-      ordersContainer.appendChild(orderElement);
+    console.log("Creating order with details:", {
+      product,
+      price,
+      userId,
+      status: false, // Set status to false initially
+      date: serverTimestamp(),
+      orderId: orderRef.id,
+      Your_Item: "Your Item Will Be Delivered Here"
     });
 
-    // Add event listeners for delete buttons
-    document.querySelectorAll('.delete-button').forEach(button => {
-      button.addEventListener('click', async (event) => {
-        const orderId = event.target.getAttribute('data-id');
-        console.log("Deleting order with ID:", orderId);
-        await deleteOrder(orderId);
-      });
+    // Save the order to Firestore
+    await setDoc(orderRef, {
+      product,
+      price,
+      userId,
+      status: false, // Set status to false initially
+      date: serverTimestamp(),
+      orderId: orderRef.id,
+      Your_Item: "Your Item Will Be Delivered Here"
     });
-  } catch (error) {
-    console.error('Error fetching orders:', error);
-    document.getElementById('orders').innerHTML = '<p>Error fetching orders. Please try again later.</p>';
-  }
-}
 
-// Delete order from Firestore
-async function deleteOrder(orderId) {
-  console.log("Attempting to delete order with ID:", orderId);
-  try {
-    await deleteDoc(doc(db, 'orders', orderId));
-    alert('Order deleted successfully');
-    // Refresh orders after deletion
-    const user = auth.currentUser;
-    if (user) {
-      await fetchOrders(user.uid);
+    console.log("Order saved to Firestore successfully");
+
+    // Redirect based on payment method
+    if (method === 'paypal') {
+      window.open(window.currentPayLink, '_blank');
+    } else if (method === 'baridimob') {
+      window.open(window.currentBaridiMobLink, '_blank');
+    } else if (method === 'usdt') {
+      window.open(window.currentUsdtLink, '_blank');
     }
+
+    // Close the popup after redirection
+    closePopup();
   } catch (error) {
-    console.error('Error deleting order:', error);
-    alert('Failed to delete order');
+    console.error("Error handling payment or saving order:", error);
   }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const signOutButton = document.createElement('button');
+  signOutButton.textContent = 'Sign Out';
+  signOutButton.onclick = async () => {
+    try {
+      await signOut(auth);
+      console.log('User signed out successfully');
+    } catch (error) {
+      console.error('Sign-out error:', error);
+    }
+  };
+
+  const authStateListener = (user) => {
+    if (user) {
+      document.body.appendChild(signOutButton);
+      console.log("User is signed in:", user.uid);
+      const emailSpan = document.getElementById('email');
+      const userNameSpan = document.getElementById('userName');
+      if (emailSpan) emailSpan.textContent = user.email || 'No email';
+      if (userNameSpan) userNameSpan.textContent = user.displayName || 'No username';
+    } else {
+      if (document.body.contains(signOutButton)) {
+        document.body.removeChild(signOutButton);
+      }
+      console.log("User is signed out");
+      const emailSpan = document.getElementById('email');
+      const userNameSpan = document.getElementById('userName');
+      if (emailSpan) emailSpan.textContent = 'Not logged in';
+      if (userNameSpan) userNameSpan.textContent = 'Not logged in';
+    }
+  };
+
+  onAuthStateChanged(auth, authStateListener);
+});
+
 
 
 
