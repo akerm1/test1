@@ -99,7 +99,7 @@ document.getElementById('googleSignInButton').addEventListener('click', () => {
         console.log('Google Sign-In successful:', user.displayName);
         signInStatus.textContent = `Signed in as ${user.displayName}`;
         signInStatus.style.color = 'green';
-        window.location.href = 'http://127.0.0.1:5500/index.htmll';  // Redirect after successful Google Sign-In
+        window.location.href = 'http://127.0.0.1:5500/index.html';  // Redirect after successful Google Sign-In
     })
     .catch((error) => {
         console.error("Error during Google Sign-In:", error);
