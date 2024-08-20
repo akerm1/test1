@@ -1,0 +1,332 @@
+/*
+Theme Name: jquery-com
+Template: jquery
+Description: Theme for jquery.com and blog.jquery.com
+*/
+
+a,
+.title {
+	color: #b24926;
+}
+#content a:hover {
+	color: #333;
+}
+
+/* Home Page */
+
+#home-content {
+	margin-bottom: 15px;
+}
+
+#banner-secondary a,
+#banner-secondary a:hover {
+	color: #b3b3b3;
+}
+#banner-secondary h3 {
+	color: #7acef4;
+	margin-bottom: 0.5em;
+}
+
+#banner-secondary .features-box p {
+	font-size: .8em;
+	line-height: 1em;
+	padding: 0;
+}
+
+.feature-box-image {
+	margin: 0 auto 1em auto;
+	width: 120px;
+	height: 107px;
+	overflow: hidden;
+}
+.lightweight-footprint .feature-box-image {
+	background: url('i/feature-sprites.png') 0 0 no-repeat;
+}
+.css3-compliant .feature-box-image{
+	background: url('i/feature-sprites.png') -139px 0 no-repeat;
+}
+.cross-browser .feature-box-image{
+	background: url('i/feature-sprites.png') -278px 0 no-repeat;
+	transition: all 0.4s;
+}
+.cross-browser .feature-box-image:hover {
+	transition: all 0.7s;
+	transform: rotate(6.28rad);
+}
+
+.download-options,
+.download-help {
+	margin-top: 1em;
+}
+#banner-secondary .download-options a {
+	display: block;
+}
+#banner-secondary .download-main .button {
+	float: none;
+	box-shadow: 0 0 20px rgba(209, 143, 79, 0.6);
+	border-radius: 0;
+	border: none;
+	transition: all 1s;
+}
+#banner-secondary .download-main .button:hover {
+	box-shadow: 0 0 25px rgba(209, 143, 79, 0.9);
+}
+#content #banner-secondary .download-main > a {
+	display: block;
+	padding: 0 0 .5em 0;
+	font-size: 2em;
+	width: 100%;
+	text-align: center;
+	text-decoration: none;
+	line-height: 0.8em;
+}
+#content #banner-secondary .download-main > a span {
+	display: block;
+	font-size: 0.6em;
+}
+#content #banner-secondary .download-main > a span.download {
+	background: url('i/download.png') 0 0;
+	width: 44px;
+	height: 37px;
+	position: relative;
+	top: 1em;
+	display: inline-block;
+	margin-right: 0.5em;
+}
+#content #banner-secondary .download-main .support-notice {
+	font-size: 12px;
+}
+
+.resources {
+	padding-left: 60px;
+}
+
+/* Project Tiles */
+
+#content .project-tiles {
+	margin: 0;
+}
+
+.project-tile {
+	padding-top: 1em;
+	padding-bottom: 1em;
+	text-align: center;
+}
+.project-tile .logo {
+	text-indent: -9999px;
+	display: inline-block;
+}
+
+/* Team */
+
+.block-grid,
+#content .block-grid {
+	display: flex;
+	flex-flow: row wrap;
+	margin: 0 -12px;
+}
+.block-grid li,
+#content .block-grid li {
+	display: block;
+	margin: 0;
+	padding: 0 12px 12px;
+}
+.block-grid.two-up li,
+#content .block-grid.two-up li {
+	width: 50%;
+}
+.block-grid.three-up li,
+#content .block-grid.three-up li {
+	width: 33.33%;
+}
+.block-grid.four-up li,
+#content .block-grid.four-up li {
+	width: 25%;
+}
+.block-grid.five-up li,
+#content .block-grid.five-up li {
+	width: 20%;
+}
+@media only screen and (max-width: 767px) {
+	.block-grid.mobile-one-up li { width: 100% !important; }
+	.block-grid.mobile-two-up li { width: 50% !important; }
+	.block-grid.mobile-three-up li { width: 33.33% !important; }
+	.block-grid.mobile-four-up li { width: 25% !important; }
+}
+
+.page-slug-team .block-grid li {
+	text-align: center;
+}
+.page-slug-team .block-grid img {
+	max-width: 100%;
+	margin-bottom: 10px;
+}
+.page-slug-team .block-grid p {
+	text-align: left;
+}
+.page-slug-team #content h2 {
+	color: #333;
+	font-size: 20px;
+	line-height: 20px;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 5px;
+}
+.page-slug-team #content h3 {
+	color: #0769ad;
+	font-style: italic;
+	font-size: 14px;
+	line-height: 18px;
+	text-align: center;
+}
+
+.page-slug-team #content .team-list h3 {
+	min-height: 5px;
+}
+
+.page-slug-team #content .past-team-list h2,
+.page-slug-team #content .past-team-list h3 {
+	text-align: left;
+}
+.page-slug-team #content .past-team-list h3 {
+	min-height: 45px;
+	border-bottom: 1px solid #dbdbdb;
+}
+
+.page-slug-team .center-txt {
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+/* Blog comments */
+
+#comments-title,
+#content h2#comments-title {
+	margin-top: 2.6em;
+	text-transform: uppercase;
+}
+.nopassword,
+.nocomments {
+	font-size: 24px;
+	font-weight: 100;
+	margin: 26px 0;
+}
+.commentlist {
+	list-style: none;
+	margin: 0 auto;
+}
+.content .commentlist {
+	width: 100%; /* reset the width for the one-column layout */
+}
+#comments .commentlist > li.comment {
+	background: #f6f6f6;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	margin: 0 0 1em 60px;
+	padding: 5px 12px 0;
+	position: relative;
+	word-wrap: break-word;
+}
+#comments .commentlist > li.pingback {
+	margin: 0 0 1em 60px;
+	padding: 0;
+}
+.comment-meta .fn {
+	font-style: normal;
+	font-weight: bold;
+}
+.comment-meta {
+	color: #666;
+	font-size: 12px;
+	line-height: 2.2em;
+}
+#comments .commentlist > li.bypostauthor {
+	border-color: #0769ad;  /* jQuery Primary Blue */
+}
+#comments .commentlist > li.bypostauthor .comment-meta {
+	background: #ddd;
+	border-radius: 3px 3px 0 0;
+	color: inherit;
+	margin: -5px -12px 5px -12px;
+	padding: 5px 12px;
+}
+.commentlist .avatar {
+	border-radius: 3px;
+	box-shadow: 0 1px 2px #ccc;
+	left: -82px;
+	padding: 0;
+	position: absolute;
+	top: 0;
+}
+a.comment-reply-link {
+	background: #eee;
+	border-radius: 3px;
+	color: #666;
+	display: inline-block;
+	font-size: 12px;
+	padding: 0 8px;
+	text-decoration: none;
+}
+a.comment-reply-link:hover,
+a.comment-reply-link:focus,
+a.comment-reply-link:active {
+	background: #888;
+	color: #fff;
+}
+a.comment-reply-link > span {
+	display: inline-block;
+	position: relative;
+	top: -1px;
+}
+
+/* Blog comment form */
+
+#respond {
+	background: #f6f6f6;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	margin: 0 0 1.625em;
+	padding: 1.625em;
+}
+#respond form {
+	padding: 0;
+}
+#respond p {
+	margin: 10px 0;
+}
+#respond .comment-notes,
+#respond .logged-in-as,
+#respond label {
+	font-size: 12px;
+}
+#respond label {
+	line-height: 2.2em;
+}
+#respond .comment-form-comment label {
+	display: block;
+}
+#respond .required {
+	color: #bd3500;
+	font-weight: bold;
+}
+#respond input[type="text"],
+#respond textarea {
+	background: #fff;
+	border-radius: 5px;
+	padding: 10px;
+}
+#respond textarea {
+	resize: vertical;
+	width: 95%;
+}
+#respond input[type=text] {
+	display: block;
+	height: 24px;
+	width: 75%;
+}
+#respond .form-submit {
+	text-align: right;
+}
+#respond input[type=submit] {
+	float: none;
+}

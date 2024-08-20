@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Store</title>
+    <!-- Firebase App (the core Firebase SDK) -->
+<script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js"></script>
+<!-- Firebase Authentication SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js"></script>
+
+    <link rel="stylesheet" href="style01.css">
+
+</head>
+<body>
+
+  
+    <header class="main-header">
+        <div class="logo-section">
+            <img src="img/Screenshot 2024-03-16 135332.png" alt="Logo" class="logo">
+        </div>
+       
+          
+
+
+
+
+        
+
+
+        <div class="searchBox">
+
+            <input class="searchInput" type="text" name="" placeholder="Search something">
+            <button class="searchButton" href="#">
+                   
+                  
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
+  <g clip-path="url(#clip0_2_17)">
+    <g filter="url(#filter0_d_2_17)">
+      <path d="M23.7953 23.9182L19.0585 19.1814M19.0585 19.1814C19.8188 18.4211 20.4219 17.5185 20.8333 16.5251C21.2448 15.5318 21.4566 14.4671 21.4566 13.3919C21.4566 12.3167 21.2448 11.252 20.8333 10.2587C20.4219 9.2653 19.8188 8.36271 19.0585 7.60242C18.2982 6.84214 17.3956 6.23905 16.4022 5.82759C15.4089 5.41612 14.3442 5.20435 13.269 5.20435C12.1938 5.20435 11.1291 5.41612 10.1358 5.82759C9.1424 6.23905 8.23981 6.84214 7.47953 7.60242C5.94407 9.13789 5.08145 11.2204 5.08145 13.3919C5.08145 15.5634 5.94407 17.6459 7.47953 19.1814C9.01499 20.7168 11.0975 21.5794 13.269 21.5794C15.4405 21.5794 17.523 20.7168 19.0585 19.1814Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" shape-rendering="crispEdges"></path>
+    </g>
+  </g>
+  <defs>
+    <filter id="filter0_d_2_17" x="-0.418549" y="3.70435" width="29.7139" height="29.7139" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
+      <feOffset dy="4"></feOffset>
+      <feGaussianBlur stdDeviation="2"></feGaussianBlur>
+      <feComposite in2="hardAlpha" operator="out"></feComposite>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2_17"></feBlend>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2_17" result="shape"></feBlend>
+    </filter>
+    <clipPath id="clip0_2_17">
+      <rect width="28.0702" height="28.0702" fill="white" transform="translate(0.403503 0.526367)"></rect>
+    </clipPath>
+  </defs>
+</svg>
+                     
+
+            </button>
+        </div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+        <div class="auth-controls">
+            <div id="profileCircle" class="profile-circle" style="display: none;">
+                <a href="files/pro.html"></a>
+            </div>
+
+
+
+
+
+          
+
+
+
+
+        <button class="styled-button" id="signbtn" onclick="window.location.href='files/sign.html';">
+            Sign in/ Sign up
+            <div class="inner-button">
+              <svg
+                id="Arrow"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+                height="30px"
+                width="30px"
+                class="icon"
+              >
+                <defs>
+                  <linearGradient y2="100%" x2="100%" y1="0%" x1="0%" id="iconGradient">
+                    <stop style="stop-color:#FFFFFF;stop-opacity:1" offset="0%"></stop>
+                    <stop style="stop-color:#AAAAAA;stop-opacity:1" offset="100%"></stop>
+                  </linearGradient>
+                </defs>
+                <path
+                  fill="url(#iconGradient)"
+                  d="M4 15a1 1 0 0 0 1 1h19.586l-4.292 4.292a1 1 0 0 0 1.414 1.414l6-6a.99.99 0 0 0 .292-.702V15c0-.13-.026-.26-.078-.382a.99.99 0 0 0-.216-.324l-6-6a1 1 0 0 0-1.414 1.414L24.586 14H5a1 1 0 0 0-1 1z"
+                ></path>
+              </svg>
+            </div>
+          </button>
+          
+
+
+
+        </div>
+    </header>
+  
+    <div class="category-bar">
+        <div class="category"><a class="a2" href="#game">Account</a></div>
+        <div class="category"><a class="a2" href="#foot">Payment methods</a></div>
+        <div class="category"><a class="a2" href="#how">Procedure</a></div>
+
+
+    </div>
+  
+
+  
+<div class="bigc">
+
+
+    <div class="product-container">
+        <!-- Product items -->
+        <div class="product">
+            <img class="productimg" src="img/discord-3d-icon-free-png.webp" alt="" onclick="window.location.href='discord/discord.html'">
+        </div>
+        <div class="product">
+            <img class="productimg" src="img/Spotify_logo_vertical_black.jpg" alt="" onclick="window.location.href='spotify/spotify.html'">
+        </div>
+        <div class="product">
+            <img class="productimg" src="img/5.jpg" alt="" onclick="window.location.href='prime/prime.html'">
+        </div>
+        <div class="product">
+           <img class="productimg" src="img/4.jpeg" alt="" onclick="window.location.href='disney/disney.html'">
+        </div>
+        
+        <div class="product">
+            <img class="productimg" src="img/7.png" alt="" onclick="window.location.href='crunsh/crunsh.html'">
+        </div>
+
+        <div class="product">
+            <img class="productimg" src="img/com.netflix.mediaclient.jpg" alt="" onclick="window.location.href='netflix-page/netflix.html'">
+        </div>
+        
+    </div>
+</div>
+  
+    <div class="hot-games-section" id="game">
+        <h1 class="section-title1">Trading platform with 100% security </h1>
+        <h2 class="section-title">TRENDING ITEMS</h2>
+        <div class="product-items">
+  
+            
+            
+      <div class="product-card">
+                <a href="netflix-page/netflix.html"><img src="img/com.netflix.mediaclient.jpg" alt="Netflix Premium" class="product-image" /></a>
+            </div>     
+            
+            
+
+      <div class="product-card">
+                <a href="spotify/spotify.html"><img src="img/Spotify_logo_vertical_black.jpg" alt="Netflix Premium" class="product-image" /></a>
+            </div>   
+            
+            
+
+      <div class="product-card">
+                <a href="discord/discord.html"><img src="img/3.jpg" alt="Netflix Premium" class="product-image" /></a>
+            </div>  
+            
+            
+
+      <div class="product-card">
+                <a href="prime/prime.html"><img src="img/5.jpg" alt="Netflix Premium" class="product-image" /></a>
+            </div>  
+            
+            
+      <div class="product-card">
+                <a href="disney/disney.html"><img src="img/4.jpeg" alt="Netflix Premium" class="product-image" /></a>
+            </div> 
+            
+            
+      <div class="product-card">
+                <a href="crunsh/crunsh.html"><img src="img/7.png" alt="Netflix Premium" class="product-image" /></a>
+            </div>      
+            
+               
+            
+
+
+
+            
+           
+            
+        </div>
+    </div>
+  
+    <div class="line" id="how"></div>
+  
+    <section class="howitworks" >
+        <div class="registration" id="works">
+            <div class="icons-section">
+                <img class="icon-image" src="img/images reg.png" alt="">
+            </div>
+            <div class="write-section "  >
+                <h1>registration</h1>
+                <h4>Register for free </h4>
+            </div>
+        </div>
+        <div class="registration " >
+            <div class="icons-section" id="">
+                <img class="icon-image" src="img/images  payy.png" alt="">
+            </div>
+            <div class="write-section">
+                <h1>payment</h1>
+                <h4>Checkout with your preferred method</h4>
+            </div>
+        </div>
+        <div class="registration">
+            <div class="icons-section">
+                <img class="icon-image" src="img/delivery-icon-transparent-background-shipping-cost-ico-11562852302e3mtlf1bfz.png" alt="">
+            </div>
+            <div class="write-section">
+                <h1>delivery</h1>
+                <h4>Delivery by E-MAIL</h4>
+            </div>
+        </div>
+        <div class="registration" id="works3">
+            <div class="icons-section">
+                <img class="icon-image" src="img/images warranty.png" alt="">
+            </div>
+            <div class="write-section" >
+                <h1>warranty</h1>
+                <h4 id="foot">100% warranty for the whole subscription period</h4>
+            </div >
+        </div>
+    </section>
+  
+    <div id="productContainer1"></div>
+  
+    <div class="line" ></div>
+
+    <div class="paym" >
+
+        <div class="paym1 pm1"><img class="img1" src="img/visa.png" alt=""></div>
+        <div class="paym1 pm2"><img class="img1" src="img/Cryptocurrency-Tether-Usdt-Logo-Graphics-13393983-1.jpg" alt=""></div>
+        <div class="paym1 pm3"><img class="img1" src="img/binance pay.png" alt=""></div>
+        <div class="paym1 pm4"><img class="img1" src="img/Bitcoin-Logo.png " alt=""></div>
+
+    </div>
+
+    <div class="line"></div>
+  
+    <footer class="main-footer" >
+        <div class="footer-content">
+            <p>&copy; 2024 VOYLLAR.COM. All rights reserved.</p>
+            <ul>
+                <li><a href="#">Home</a></li>
+
+                <li><a href="#game">Services</a></li>
+ 
+            </ul>
+        </div>
+    </footer>
+
+
+    <script type="module" src="script01.js"></script>
+
+
+</body>
+</html>
