@@ -33,7 +33,6 @@ window.openPopup = function(event, payLink, baridiMobLink, usdtLink) {
       priceDisplay.textContent = `Price: ${price}`;
     }
     popup.style.display = 'flex';
-    console.log("Popup opened with details:", { product, price, payLink, baridiMobLink, usdtLink });
   } else {
     console.error("Payment popup element not found.");
   }
@@ -41,9 +40,6 @@ window.openPopup = function(event, payLink, baridiMobLink, usdtLink) {
   onAuthStateChanged(auth, (user) => {
     if (!user) {
       alert("Please sign in to make a purchase.");
-      console.log("User not signed in");
-    } else {
-      console.log("User is signed in:", user.uid);
     }
   });
 }
@@ -52,7 +48,6 @@ window.closePopup = function() {
   const popup = document.getElementById('payment-popup');
   if (popup) {
     popup.style.display = 'none';
-    console.log("Popup closed");
   } else {
     console.error("Payment popup element not found.");
   }
@@ -64,7 +59,6 @@ window.handlePayment = async function(method) {
 
   if (!product || !price) {
     alert("Product or price information is missing.");
-    console.log("Product or price missing.");
     return;
   }
 
@@ -72,38 +66,23 @@ window.handlePayment = async function(method) {
     const user = auth.currentUser;
     if (!user) {
       alert("Please sign in to make a purchase.");
-      console.log("No user signed in");
       return;
     }
 
     const userId = user.uid;
     const ordersCollection = collection(db, 'orders');
-    const orderRef = doc(ordersCollection); // Create a new document reference
+    const orderRef = doc(ordersCollection); 
 
-    console.log("Creating order with details:", {
-      product,
-      price,
-      userId,
-      status: false, // Set status to false initially
-      date: serverTimestamp(),
-      orderId: orderRef.id,
-      Your_Item: "Your Item Will Be Delivered Here"
-    });
-
-    // Save the order to Firestore
     await setDoc(orderRef, {
       product,
       price,
       userId,
-      status: false, // Set status to false initially
+      status: false, 
       date: serverTimestamp(),
       orderId: orderRef.id,
       Your_Item: "Your Item Will Be Delivered Here"
     });
 
-    console.log("Order saved to Firestore successfully");
-
-    // Redirect based on payment method
     if (method === 'paypal') {
       window.open(window.currentPayLink, '_blank');
     } else if (method === 'baridimob') {
@@ -112,7 +91,6 @@ window.handlePayment = async function(method) {
       window.open(window.currentUsdtLink, '_blank');
     }
 
-    // Close the popup after redirection
     closePopup();
   } catch (error) {
     console.error("Error handling payment or saving order:", error);
@@ -134,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const authStateListener = (user) => {
     if (user) {
       document.body.appendChild(signOutButton);
-      console.log("User is signed in:", user.uid);
       const emailSpan = document.getElementById('email');
       const userNameSpan = document.getElementById('userName');
       if (emailSpan) emailSpan.textContent = user.email || 'No email';
@@ -143,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (document.body.contains(signOutButton)) {
         document.body.removeChild(signOutButton);
       }
-      console.log("User is signed out");
       const emailSpan = document.getElementById('email');
       const userNameSpan = document.getElementById('userName');
       if (emailSpan) emailSpan.textContent = 'Not logged in';
