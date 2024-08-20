@@ -80,7 +80,7 @@ signInForm.addEventListener('submit', (e) => {
             console.log('Signed in as:', user.email);
             signInStatus.textContent = 'Sign in successful';
             signInStatus.style.color = 'green';
-            window.location.href = '../index.html';  // Redirect after successful sign-in
+            window.location.href = '/index.html';  // Redirect after successful sign-in
         })
         .catch((error) => {
             console.error(error.message);
@@ -99,7 +99,7 @@ document.getElementById('googleSignInButton').addEventListener('click', () => {
         console.log('Google Sign-In successful:', user.displayName);
         signInStatus.textContent = `Signed in as ${user.displayName}`;
         signInStatus.style.color = 'green';
-        window.location.href = 'index.html';  // Redirect after successful Google Sign-In
+        window.location.href = '/index.html';  // Redirect after successful Google Sign-In
     })
     .catch((error) => {
         console.error("Error during Google Sign-In:", error);
