@@ -69,6 +69,7 @@ signUpForm.addEventListener('submit', (e) => {
 });
 
 // Sign in form submission
+// Sign in form submission
 signInForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('signInEmail').value;
@@ -80,7 +81,8 @@ signInForm.addEventListener('submit', (e) => {
             console.log('Signed in as:', user.email);
             signInStatus.textContent = 'Sign in successful';
             signInStatus.style.color = 'green';
-            window.location.href = '/index.html';  // Redirect after successful sign-in
+            console.log('Redirecting to index.html...');
+            window.location.href = 'index.html';  // Ensure the path is correct
         })
         .catch((error) => {
             console.error(error.message);
@@ -92,14 +94,15 @@ signInForm.addEventListener('submit', (e) => {
 // Google Sign-In
 document.getElementById('googleSignInButton').addEventListener('click', () => {
     const provider = new GoogleAuthProvider();
-    
+
     signInWithPopup(auth, provider)
     .then((result) => {
         const user = result.user;
         console.log('Google Sign-In successful:', user.displayName);
         signInStatus.textContent = `Signed in as ${user.displayName}`;
         signInStatus.style.color = 'green';
-        window.location.href = '/index.html';  // Redirect after successful Google Sign-In
+        console.log('Redirecting to index.html...');
+        window.location.href = 'index.html';  // Ensure the path is correct
     })
     .catch((error) => {
         console.error("Error during Google Sign-In:", error);
@@ -107,7 +110,6 @@ document.getElementById('googleSignInButton').addEventListener('click', () => {
         signInStatus.style.color = 'red';
     });
 });
-
 
 
 
